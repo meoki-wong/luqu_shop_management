@@ -2,7 +2,7 @@ import { message, notification } from 'antd';
 import BASE from './base';
 import Method from './Method';
 import { request } from '../api/request';
-import { getPrint } from './printerProcess';
+import { getPrint, startPrint } from './printerProcess';
 import Music from './music/notice.mp3';
 
 let ShopId = null;
@@ -13,8 +13,6 @@ let orderInitialed = false;
 const audio = new Audio(Music);
 
 export const getOrders = async () => {
-  getPrint();
-
   // audio.play();
   console.log('App Show');
   let orderTrackInterval = 0; // 轮询
@@ -88,8 +86,8 @@ export const getOrders = async () => {
       // });
 
       // music.play();
+      startPrint(getPrint());
       audio.play();
-
       message.info('你有新的订单');
       notification.open({
         message: '你有新的订单',

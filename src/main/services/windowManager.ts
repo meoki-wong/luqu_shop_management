@@ -46,7 +46,7 @@ class MainInit {
       minWidth: 1164,
       width: 1164,
       show: false,
-      frame: !config.IsUseSysTitle,
+      // frame: false,
       webPreferences: {
         sandbox: false,
         webSecurity: false,
@@ -192,9 +192,9 @@ class MainInit {
     this.loadWindow = new BrowserWindow({
       width: 800,
       height: 600,
-      frame: false,
+      // frame: false,
       skipTaskbar: true,
-      transparent: true,
+      // transparent: true,
       resizable: false,
       webPreferences: {
         experimentalFeatures: true,
