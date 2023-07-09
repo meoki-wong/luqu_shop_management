@@ -1,5 +1,15 @@
+const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 export const postPrinter = (item) => {
-	return `
+  return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -160,9 +170,13 @@ export const postPrinter = (item) => {
             </div>
             <div class="hr">······································</div>
             <div class="car-info">
-                <p class="car-no">车辆尾号321【柯尼塞格，黑】</p>
-                <p class="mobile">电话尾号9281</p>
-                <p class="car-time">车主：最快预到26分钟【仅代表下单距离】</p>
+                <p class="car-no">车辆尾号${JSON.parse(item.PickupCode).numberPlate}【${JSON.parse(item.PickupCode).brand}，${
+    JSON.parse(item.PickupCode).color
+  }】</p>
+                <p class="mobile">电话尾号${item.CustomorPhoneNumber}</p>
+                <p class="car-time">车主：最快预到${Math.floor(
+                  (new Date(item.ArriveDateTime).getTime() - new Date().getTime()) / 1000 / 60,
+                )}分钟【仅代表下单距离】</p>
                 <p class="tips">实际到达时间请以看护人端定位为准，请耐心等待，若长时间仍未到达，请电话联系客户！</p>
             </div>
             <div class="hr">·················备注·················</div>
@@ -171,21 +185,21 @@ export const postPrinter = (item) => {
             </div>
             <div class="hr">······································</div>
             <ul class="goods-list">
-                <li>叉烧包 ×1</li>
-                <li>叉烧包 ×1</li>
-                <li>叉烧包 ×1</li>
-                <li>叉烧包 ×1</li>
-                <li>叉烧包 ×1</li>
-                <li>叉烧包 ×1</li>
+                ${item.CommodityList.map((items, index) => {
+                  return (
+                    <li key={item.ID}>
+                      {items.Name} ×{items.Count}
+                    </li>
+                  );
+                })}
                 <li>...已折叠</li>
             </ul>
-            <div class="total">合计：￥389</div>
+            <div class="total">合计：￥${item.TotalPrices}</div>
             <div class="hr">······································</div>
-            <div class="line-icon">||||||||||||||||||||</div>
-            <div class="order-number">订单号：NO:2022091620244401</div>
+            <div class="order-number">订单号：NO:${item.ID}</div>
             <div class="order-times">
-                <p><span>下单时间</span><span>5-15  12：10</span></p>
-                <p><span>打印时间</span><span>5-15  12：10</span></p>
+                <p><span>下单时间</span><span>${item.CreateTime}</span></p>
+                <p><span>打印时间</span><span>${formatDate(new Date())}</span></p>
             </div>
             <div class="hr">··············路取#1完··············</div>
         </div>

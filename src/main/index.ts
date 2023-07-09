@@ -17,9 +17,24 @@ function onAppReady() {
 app.whenReady().then(onAppReady);
 // 由于9.x版本问题，需要加入该配置关闭跨域问题
 app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
+app.on('before-quit', () => {
+  console.log('----测试');
+  // 获取默认会话
+  const { defaultSession } = session;
 
+  // 清空 localStorage
+  defaultSession.clearStorageData({
+    storages: ['localstorage'],
+  });
+});
 app.on('window-all-closed', () => {
   // 所有平台均为所有窗口关闭就退出软件
+  const { defaultSession } = session;
+
+  // 清空 localStorage
+  defaultSession.clearStorageData({
+    storages: ['localstorage'],
+  });
   app.quit();
 });
 app.on('browser-window-created', () => {

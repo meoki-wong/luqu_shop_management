@@ -7,7 +7,7 @@ const printList = [];
 
 // 打印程序
 
-export const startPrint = (obj) => {
+export const startPrint = (obj, item) => {
   // obj 是打印机对象
   const printData = {
     deviceName: obj.name, // 打印机名称
@@ -20,9 +20,10 @@ export const startPrint = (obj) => {
   });
 };
 
-export const getPrint = () => {
+export const getPrint = (items) => {
+  console.log('----items', items);
   const reslut = sendSync('getPrinterList');
-  startPrint(reslut[0]);
+  startPrint(reslut[0], items);
   return reslut[0];
   // 监听主线程发送打印机列表的事件
   // ipcRenderer.on("getPrinterList", (event, data) => {

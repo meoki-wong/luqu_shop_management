@@ -6,7 +6,7 @@ import { getPrint, startPrint } from './printerProcess';
 import Music from './music/notice.mp3';
 
 let ShopId = null;
-const queryInterval = 1000;
+const queryInterval = 3;
 const orderIdList = [];
 let orderInitialed = false;
 
@@ -86,7 +86,7 @@ export const getOrders = async () => {
       // });
 
       // music.play();
-      startPrint(getPrint());
+      startPrint(getPrint(item));
       audio.play();
       message.info('你有新的订单');
       notification.open({
